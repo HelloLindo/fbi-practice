@@ -8,7 +8,7 @@
         <el-form-item label="姓名" :label-width="formLabelWidth">
           <el-input v-model="form.name" autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item label="所在省份" :label-width="formLabelWidth">
+        <el-form-item label="所在地址" :label-width="formLabelWidth">
           <el-input v-model="form.province" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="重要级别" :label-width="formLabelWidth">
@@ -56,7 +56,7 @@ export default {
       this.form.level = row.user_level
       this.dialogFormVisible = true
     },
-    async click_confirm() {
+    click_confirm() {
       let form_data = {
         user_id: this.form.id,
         user_name: this.form.name,
@@ -64,7 +64,8 @@ export default {
         user_level: this.form.level
       }
       let this_form = this.form
-      await axios
+      let this_el = this
+      axios
         .post("http://localhost:3000/api/editUsers", {
           user_data: form_data
         })
@@ -73,19 +74,18 @@ export default {
           this_form.name = response.data.data.user_data.user_name
           this_form.province = response.data.data.user_data.user_province
           this_form.level = response.data.data.user_data.user_level
+          let edited_data = {
+            user_id: this_form.id,
+            user_name: this_form.name,
+            user_province: this_form.province,
+            user_level: this_form.level
+          }
+          this_el.dialogFormVisible = false
+          this_el.$emit('returnEditedData', edited_data)
         })
         .catch(function(error) {
           console.log(error)
         })
-      this.dialogFormVisible = false
-      let edited_data = {
-        user_id: this_form.id,
-        user_name: this_form.name,
-        user_province: this_form.province,
-        user_level: this_form.level
-      }
-      console.log(temp)
-      this.$emit('returnEditedData', edited_data)
     }
   }
 }

@@ -10,7 +10,7 @@
       <el-table-column type="selection" width="55"></el-table-column>
       <el-table-column prop="user_id" label="用户ID" width="200"></el-table-column>
       <el-table-column prop="user_name" label="姓名" width="200"></el-table-column>
-      <el-table-column prop="user_province" label="所在省份" width="200"></el-table-column>
+      <el-table-column prop="user_province" label="所在地址" width="200"></el-table-column>
       <el-table-column prop="user_level" label="重要级别" width="200" height="50"></el-table-column>
       <el-table-column label="操作">
         <template slot-scope="scope">
@@ -84,16 +84,39 @@ export default {
       this.$refs.enter_form.open_dialog(index, row)
     },
     handleDelete(index, row) {
-      console.log(index, row)
+      let form_data = {
+        user_id: row.user_id,
+        user_name: row.user_name,
+        user_province: row.user_province,
+        user_level: row.user_level
+      }
+      let this_el = this
+      axios
+        .post("http://localhost:3000/api/removeUsers", {
+          user_data: form_data
+        })
+        .then(function(response) {
+          let utb = this_el.user_table_data
+          for(let i in utb) {
+            if(utb[i].user_id == response.data.data.user_data.user_id){
+              utb.splice(i, 1)
+              console.log(response.data.data.user_data.user_id + " removed")
+            }
+          }
+        })
+        .catch(function(error) {
+          console.log(error)
+        })
     },
     batchDelete() {
       // 批量删除
-      console.log(this.multipleSelection)
+      for(let i in this.multipleSelection) {
+        this.handleDelete(0, this.multipleSelection[i])
+      }
     },
     refreshData(edited_data) {
       let utb = this.user_table_data
       for(let i in utb) {
-        console.log(utb[i].user_id == edited_data.user_id)
         if(utb[i].user_id == edited_data.user_id){
           utb[i].user_name = edited_data.user_name
           utb[i].user_province = edited_data.user_province
