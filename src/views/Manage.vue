@@ -80,8 +80,8 @@ export default {
     handleSelectionChange(val) {
       this.multipleSelection = val
     },
-    async handleEdit(index, row) {
-      await this.$refs.enter_form.open_dialog(index, row)
+    handleEdit(index, row) {
+      this.$refs.enter_form.open_dialog(index, row)
     },
     handleDelete(index, row) {
       console.log(index, row)
