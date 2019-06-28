@@ -14,6 +14,7 @@ module.exports = {
     host: 'localhost',
     port: 8888,
     proxy: {
+      // 待研究在前端层面设置代理避免跨域问题
       '/proxy': 'https://api.github.com'
     }
   },

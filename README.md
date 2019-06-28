@@ -1,8 +1,8 @@
-# fbi-project-vue
+# fbi-practice with fbi-project-vue
 
-A modern project which uses `Vue.js` and `Webpack`.
+A practice about user management front-end which uses `fbi-project-vue` and it works with `fbi-project-mod`.
 
-> This is a fbi project template. If you haven't installed [fbi](https://github.com/AlloyTeam/fbi) yet, use the following command to install.
+> This is an fbi project. If you haven't installed [fbi](https://github.com/AlloyTeam/fbi) yet, use the following command to install.
 >
 > `$ npm i -g fbi` or `yarn global add fbi`
 
@@ -13,29 +13,13 @@ A modern project which uses `Vue.js` and `Webpack`.
 
 ## Features
 
-- support 'single file components' and 'separated files components'
-- Eslint using [standard](https://standardjs.com/) config
-- SASS like css - [precss](https://github.com/jonathantneal/precss)
-- http proxy
-- unlimited environment data
+- Using vue.js 2.0+ and Element-UI to build the webpages
+- Using vue-router to redirect pages
+- Loading user data from fbi-project-mod practice (virtual data)
+- Providing methods to edit users data
+- Providing methods to remove users dats
 
 ## Usage
-
-**Add template**
-
-```bash
-$ fbi add https://github.com/fbi-templates/fbi-project-vue.git
-```
-
-**Create a project**
-
-```bash
-$ cd path/to/empty-folder
-$ fbi init -o vue
-
-# or
-$ fbi init -o vue my-app
-```
 
 **Show available tasks**
 
@@ -79,42 +63,9 @@ $ fbi up vue
 
 ## More
 
-- [Official templates](https://github.com/fbi-templates)
+- [More Official templates](https://github.com/fbi-templates)
 - [`fbi` documentation](https://neikvon.gitbooks.io/fbi/content/)
 
 ## License
 
 [MIT](https://opensource.org/licenses/MIT)
-
-## Changelog
-
-[Latest log](./CHANGELOG.md)
-
-
-Earlier log:
-- **4.0.1** (2018.07.11)
-
-  - Fixes 'processNextTick is not a function'
-  - Fixes eslint error
-  - Fixes hot reload bugs
-  - Fixes default demo bugs
-  - add 'separated files components' demo
-  - update `options.js`
-  - update devDependencies
-  - update readme
-
-- **4.0.0** (2018.07.10)
-
-  - Update `webpack`
-  - Update directory structure
-
-* **2.0.2** (2017.12.09)
-
-  - Add `.editorconfig`
-
-* **2.0.0** (2017.12.06)
-
-  - Improvements: build performance, use of configuration
-
-* **1.2.0** (2017.11.21)
-  - Change `fbi/config.js` to `fbi/options.js`

@@ -25,7 +25,7 @@
       <el-button @click="toggleSelection()">取消选择</el-button>
       <el-button type="danger" @click="batchDelete()">批量删除</el-button>
     </div>
-
+    <!-- 子组件是弹出框 -->
     <EditForm ref="enter_form" @returnEditedData="refreshData"></EditForm>
   </div>
 </template>
@@ -46,6 +46,7 @@ export default {
   },
   mounted() {
     let utb = this.user_table_data
+    // 页面加载完成时向中间层拉取十条用户信息
     axios
       .get("http://localhost:3000/api/pullUsers", {
         params: {
@@ -81,6 +82,7 @@ export default {
       this.multipleSelection = val
     },
     handleEdit(index, row) {
+      // 调用子组件的打开弹窗的函数
       this.$refs.enter_form.open_dialog(index, row)
     },
     handleDelete(index, row) {
@@ -91,6 +93,7 @@ export default {
         user_level: row.user_level
       }
       let this_el = this
+      // 异步向中间层发送删除对应数据的请求
       axios
         .post("http://localhost:3000/api/removeUsers", {
           user_data: form_data
@@ -99,7 +102,7 @@ export default {
           let utb = this_el.user_table_data
           for(let i in utb) {
             if(utb[i].user_id == response.data.data.user_data.user_id){
-              utb.splice(i, 1)
+              utb.splice(i, 1) // 执行删除操作
               console.log(response.data.data.user_data.user_id + " removed")
             }
           }
@@ -109,19 +112,19 @@ export default {
         })
     },
     batchDelete() {
-      // 批量删除
+      // 批量删除即逐个调用删除函数
       for(let i in this.multipleSelection) {
         this.handleDelete(0, this.multipleSelection[i])
       }
     },
     refreshData(edited_data) {
+      // 修改数据后刷新表格数据
       let utb = this.user_table_data
       for(let i in utb) {
         if(utb[i].user_id == edited_data.user_id){
           utb[i].user_name = edited_data.user_name
           utb[i].user_province = edited_data.user_province
           utb[i].user_level = edited_data.user_level
-          console.log(edited_data.user_name)
         }
       }
     }

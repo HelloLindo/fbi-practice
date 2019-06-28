@@ -50,6 +50,7 @@ export default {
   },
   methods: {
     open_dialog(index, row) {
+      // 初始化弹出框中的信息
       this.form.id = row.user_id
       this.form.name = row.user_name
       this.form.province = row.user_province
@@ -57,6 +58,7 @@ export default {
       this.dialogFormVisible = true
     },
     click_confirm() {
+      // 点击确认后做的操作
       let form_data = {
         user_id: this.form.id,
         user_name: this.form.name,
@@ -65,6 +67,7 @@ export default {
       }
       let this_form = this.form
       let this_el = this
+      // 发送异步请求给中间件
       axios
         .post("http://localhost:3000/api/editUsers", {
           user_data: form_data
@@ -81,6 +84,7 @@ export default {
             user_level: this_form.level
           }
           this_el.dialogFormVisible = false
+          // 子组件与父组件(Manage.vue)通信
           this_el.$emit('returnEditedData', edited_data)
         })
         .catch(function(error) {
