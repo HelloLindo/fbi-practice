@@ -106,6 +106,7 @@ export default {
               console.log(response.data.data.user_data.user_id + " removed")
             }
           }
+          this_el.repullData()
         })
         .catch(function(error) {
           console.log(error)
@@ -126,6 +127,32 @@ export default {
           utb[i].user_province = edited_data.user_province
           utb[i].user_level = edited_data.user_level
         }
+      }
+    },
+    repullData() {
+      let utb = this.user_table_data
+      if(utb.length==0) {
+        // 页面数据清零时向中间层拉取十条用户信息
+        axios
+          .get("http://localhost:3000/api/pullUsers", {
+            params: {
+              num_of_users: 10
+            }
+          })
+          .then(function(response) {
+            console.log(response.data.data)
+            for (let i in response.data.data) {
+              utb.push({
+                user_id : response.data.data[i].user_id,
+                user_name : response.data.data[i].user_name,
+                user_province : response.data.data[i].user_province,
+                user_level : response.data.data[i].user_level
+              }) 
+            }
+          })
+          .catch(function(error) {
+            console.log(error)
+          })
       }
     }
   }
